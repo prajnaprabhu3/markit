@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::-webkit-scrollbar {
+  display: inline;
+}
+
+.dialog {
+  width: 450px;
+}
+
+button.breadcrumb {
+  font-size: 14px;
+}
+.searchbar {
+  padding: 16px 10px;
+  margin: 0 0 8px;
+  font-size: 14px;
+}
+
+/* .command {
+  height: 50px;
+} */
+
+.command_text {
+  font-size: 14px;
+}
+
+.info_wrapper > svg {
+  width: 18px;
+  height: 18px;
+  margin-right: 12px;
+}
+
+/* markdown css  */
