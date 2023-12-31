@@ -1,15 +1,8 @@
 import { useRouter } from "next/navigation";
-import {
-  Command,
-  CommandMenu,
-  CommandWrapper,
-  useCommands,
-  useKmenu,
-} from "kmenu";
-import { FC, useEffect, useState } from "react";
+import { CommandMenu, CommandWrapper, useCommands, useKmenu } from "kmenu";
+import { useEffect, useState } from "react";
 import {
   FiHome,
-  FiBookOpen,
   FiInfo,
   FiPaperclip,
   FiAlertCircle,
@@ -27,38 +20,44 @@ import {
   FiTwitter,
   FiLinkedin,
   FiZap,
-  FiBookmark,
 } from "react-icons/fi";
+import useToggle from "@/hooks/useToggle";
+import useInput from "@/hooks/useInput";
 
-// import styles from "../../styles/palette.module.css";
+// actions
+import { Copy } from "@/lib/copy";
+import { saveFile } from "@/lib/save";
 
-const Palette: FC = () => {
+const Palette = () => {
   const { open, setOpen } = useKmenu();
   const router = useRouter();
 
-  const main: Command[] = [
+  const { toggleState } = useToggle();
+  const [inputValue] = useInput();
+
+  const main = [
     {
       category: "Navigation",
       commands: [
         {
           icon: <FiHome />,
           text: "Preview",
-          perform: () => router.push("/"),
+          perform: toggleState,
         },
         {
           icon: <FiInfo />,
           text: "Copy text",
-          perform: () => router.push("/about"),
+          perform: () => Copy(inputValue),
         },
         {
           icon: <FiCode />,
-          text: "Save as pdf",
-          perform: () => router.push("/work"),
+          text: "Save File",
+          perform: () => saveFile(inputValue),
         },
         {
           icon: <FiPaperclip />,
           text: "Save as Photo",
-          perform: () => router.push("/blog"),
+          // perform: () => saveFile(inputValue),
         },
         // {
         //   icon: <FiBookOpen />,
@@ -128,7 +127,7 @@ const Palette: FC = () => {
     },
   ];
 
-  const nested: Command[] = [
+  const nested = [
     {
       category: "Navigation",
       commands: [
@@ -190,7 +189,7 @@ const Palette: FC = () => {
     },
   ];
 
-  const loading: Command[] = [];
+  const loading = [];
 
   const [mainCommands] = useCommands(main);
   const [loadingCommands, setLoadingCommands] = useCommands(loading);

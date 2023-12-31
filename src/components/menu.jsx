@@ -1,38 +1,24 @@
 "use client";
 
-import Button from "./button";
-import Toggle from "./toggle";
+import { useKmenu } from "kmenu";
+import { FiCopy } from "react-icons/fi";
 import { FiCommand } from "react-icons/fi";
 import { HiOutlineDownload } from "react-icons/hi";
 import { HiOutlinePhotograph } from "react-icons/hi";
-import { FiCopy } from "react-icons/fi";
-// import { useState } from "react";
-import { useKmenu } from "kmenu";
-// import useToggle from "@/hooks/useToggle";
 
-type Variant = "bg-gray-800" | "bg-rose-400";
+import Button from "./button";
+import Toggle from "./toggle";
 
-interface MenuProps {
-  onClick: () => void;
-  toggleColor: string;
-}
+import useInput from "@/hooks/useInput";
 
-const Menu: React.FC<MenuProps> = ({ onClick, toggleColor }) => {
+import { Copy } from "@/lib/copy";
+import { saveFile } from "@/lib/save";
+
+const Menu = ({ onClick, toggleColor }) => {
   // const [toggleColor, setToggleColor] = useState<Variant>("bg-gray-800");
   // const [currentState, setCurrentState] = useState("editor");
   const { toggle } = useKmenu();
-
-  // const toggleState = () => {
-  //   toggleColor == "bg-gray-800"
-  //     ? setToggleColor("bg-rose-400")
-  //     : setToggleColor("bg-gray-800");
-
-  //   if (currentState === "editor") {
-  //     setCurrentState("result");
-  //   } else setCurrentState("editor");
-  // };
-
-  // console.log(currentState);
+  const [inputValue] = useInput();
 
   return (
     <div className="fixed mx-auto bottom-10 w-screen z-50 flex items-center justify-center">
@@ -41,8 +27,12 @@ const Menu: React.FC<MenuProps> = ({ onClick, toggleColor }) => {
 
         {/* buttons  */}
         <div className="flex gap-x-2">
-          <Button title="Save" Icon={HiOutlineDownload} />
-          <Button title="Copy" Icon={FiCopy} />
+          <Button
+            title="Save"
+            Icon={HiOutlineDownload}
+            action={() => saveFile(inputValue)}
+          />
+          <Button title="Copy" Icon={FiCopy} action={() => Copy(inputValue)} />
           <Button title="Photo" Icon={HiOutlinePhotograph} />
         </div>
 
